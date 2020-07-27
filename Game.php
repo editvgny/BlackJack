@@ -2,9 +2,10 @@
 
 class Game{
 
-    private $cardDeck = array();
+    private $cardDeck;
     private $player;
     private $dealer;
+    private $table;
 
     //kirakja az udvozlo kepet
     //egy inputra halad tovabb
@@ -19,10 +20,20 @@ class Game{
         $this->cardDeck =  new CardDeck();
         $this->player = new Player();
         $this->dealer = new Dealer();
+        $this->table = new Table();
     }
 
     public function prepareGame(){
         CardFactory::createCardDeck($this);
+
+
+        for ($i=0;$i<15;$i++){
+            $this->dealer->addCard($this->cardDeck->getDeck()[$i]);
+        }
+
+        echo count($this->dealer->getCards());
+
+        $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards());
 
     }
 

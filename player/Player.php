@@ -15,4 +15,20 @@ class Player
     {
         $this->name = $name;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCash(): int
+    {
+        return $this->cash;
+    }
 }

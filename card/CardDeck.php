@@ -14,4 +14,13 @@ class CardDeck
             $card->getCard();
         }
     }
+
+
+    /**
+     * @return array
+     */
+    public function getDeck(): array
+    {
+        return $this->deck;
+    }
 }
