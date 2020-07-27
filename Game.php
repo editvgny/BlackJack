@@ -10,7 +10,9 @@ class Game{
     //egy inputra halad tovabb
     public function showWelcomePage(){
         //inputtal be kell kerni a jatekos nevet es elmenteni a playerba
-        $this->player->setName("input");
+        echo "Enter you name: ";
+        $playerName = readline("Enter your name: ");
+        $this->player->setName($playerName);
 
     }
 
