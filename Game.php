@@ -31,7 +31,8 @@ class Game{
 
     public function playGame()
     {
-        $this->cardDeck->getCards();
+//        $this->cardDeck->getCards();
+
     }
 
 
