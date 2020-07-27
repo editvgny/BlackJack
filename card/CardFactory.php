@@ -15,19 +15,5 @@ class CardFactory
             }
         }
 
-
-
-        //        suits_symbols = ['♠', '♦', '♥', '♣']
-//        │░░░░░░░░░
-
-//        $unicodeChar1 = '\u2664';
-//        $unicodeChar2 = '\u2661';
-//        $unicodeChar3 = '\u2662';
-//        $unicodeChar4 = '\u2667';
-//        $card = new Card($unicodeChar1,2);
-//        $card = new Card($unicodeChar1,3);
-//        $card = new Card($unicodeChar4,4);
-//        $card = new Card($unicodeChar2,5);
-//        $card = new Card($unicodeChar1,6);
     }
 }

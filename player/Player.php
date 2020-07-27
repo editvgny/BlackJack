@@ -4,7 +4,7 @@
 class Player
 {
     private $name = "";
-    private $cards = array();
+    private $cards = array(null,null,null,null,null,null,null,null,null);
     private $cash = 1000;
 
 

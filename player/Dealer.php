@@ -4,7 +4,7 @@
 class Dealer
 {
     private $name = "Dealer";
-    private $cards = array();
+    private $cards = array(null,null,null,null,null,null,null,null,null);
 
 
 
