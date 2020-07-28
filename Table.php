@@ -7,6 +7,7 @@ class Table
         $this->printHeader($name, $playerCash);
         $this->printDealerCards($dealerCards);
         $this->printDealersPoint($dealerCards);
+        $this->printDeck();
         $this->printPlayerCards($playerCards);
         $this->printPlayersPoint($playerCards);
 
@@ -168,5 +169,22 @@ class Table
         }
 
         echo"└──────────┘";
+    }
+
+    public function printDeck()
+
+    {   $faceDownPatternHalfMinusOne = "░░░";
+        $faceDownPatternHalf = "░░░░";
+        $faceDownPattern = "░░░░░░░░";
+        $spaceInsideCard = " ".$faceDownPattern.$faceDownPattern." ";
+        $spaceInsideCardHalf = " ".$faceDownPatternHalf."BlackJack".$faceDownPatternHalfMinusOne." ";
+        $space= "                 ";
+        echo $space."┌──────────────────┐\n".$space."|".$spaceInsideCard."|\n".$space."|".$spaceInsideCardHalf."|\n"
+            .$space."|".$spaceInsideCard."|\n".$space."└──────────────────┘";
+        echo "\n";
+        echo "\n";
+
+
+
     }
 }
