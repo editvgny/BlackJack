@@ -4,7 +4,7 @@
 class Player
 {
     private $name = "";
-    private $cards = array(null,null,null,null,null,null,null,null,null);
+    private $cards = array();
     private $cash = 1000;
 
 
@@ -31,4 +31,17 @@ class Player
     {
         return $this->cash;
     }
+
+    /**
+     * @return null[]
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
+
+    public function addCard($card){
+        array_push($this->cards,$card);
+    }
+
 }

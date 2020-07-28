@@ -33,9 +33,16 @@ class Game{
             $this->dealer->addCard($this->cardDeck->getDeck()[$i]);
         }
 
-        echo count($this->dealer->getCards());
+        for ($i=0;$i<15;$i++){
+            $this->player->addCard($this->cardDeck->getDeck()[$i]);
+        }
 
-        $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards());
+        //echo count($this->dealer->getCards());
+
+        $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards());
+
+
+
 
     }
 
