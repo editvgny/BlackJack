@@ -7,10 +7,8 @@ class Game{
     private $dealer;
     private $table;
 
-    //kirakja az udvozlo kepet
-    //egy inputra halad tovabb
+
     public function showWelcomePage(){
-        //inputtal be kell kerni a jatekos nevet es elmenteni a playerba
         echo "Enter you name: ";
         $playerName = readline("Enter your name: ");
         $this->player->setName($playerName);
@@ -36,8 +34,6 @@ class Game{
         for ($i=0;$i<15;$i++){
             $this->player->addCard($this->cardDeck->getDeck()[$i]);
         }
-
-        //echo count($this->dealer->getCards());
 
         $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards());
 
