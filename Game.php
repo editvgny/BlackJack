@@ -1,4 +1,5 @@
 <?php
+require "Logo.php";
 
 class Game{
 
@@ -9,7 +10,9 @@ class Game{
 
 
     public function showWelcomePage(){
-        echo "Enter you name: ";
+        Logo::printLogo();
+        $askName =  "Enter you name: ";
+        echo $askName;
         $playerName = readline("Enter your name: ");
         $this->player->setName($playerName);
 
