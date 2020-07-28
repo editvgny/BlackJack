@@ -13,7 +13,7 @@ class Table
     }
 
     public function printHeader($name, $playerCash){
-        echo "Hello ".$name."      Your cash: ".$playerCash."\n";
+        echo "                                                       Hello ".$name."\033[0m"."      Your cash: ".$playerCash."\n";
         echo "\n";
         echo "\n";
 

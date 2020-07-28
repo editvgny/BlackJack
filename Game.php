@@ -11,11 +11,9 @@ class Game{
 
     public function showWelcomePage(){
         Logo::printLogo();
-        $askName =  "Enter you name: ";
-        echo $askName;
+        echo "Enter you name: ";
         $playerName = readline("Enter your name: ");
         $this->player->setName($playerName);
-
     }
 
     public function __construct()
