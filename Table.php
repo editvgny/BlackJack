@@ -61,14 +61,19 @@ class Table
         echo "\n";
 
         for ($i = 0; $i < count($dealerCards);$i++){
-            if($dealerCards[$i]->getValue() == 10){
-                echo "|".$dealerCards[$i]->getValue().$dealerCards[$i]->getForm();
-
-            }else{
-                echo "|".$dealerCards[$i]->getValue().$dealerCards[$i]->getForm()." ";
-
+            if($dealerCards[$i]->getValue() == 10) {
+                if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                    echo "|" . "\e[01;31m" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . "\e[0m";
+                } else {
+                    echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm();
+                };
+            }else {
+                if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                    echo "|" . "\e[01;31m". $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm(). "\e[0m" . " ";
+                } else {
+                    echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . " ";
+                }
             }
-
         }
         echo "       |";
         echo "\n";
@@ -81,7 +86,11 @@ class Table
         for ($i = 0; $i < count($dealerCards)-1;$i++){
             echo "|   ";
         }
-        echo "|    ".end($dealerCards)->getForm()."     |";
+        if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥'){
+            echo "|    " . "\e[01;31m". end($dealerCards)->getForm() . "\e[0m". "     |";
+        }else {
+            echo "|    " . end($dealerCards)->getForm() . "     |";
+        }
         echo "\n";
         for ($i = 0; $i < count($dealerCards)-1;$i++){
             echo "|   ";
@@ -93,11 +102,17 @@ class Table
             echo "|   ";
         }
         if(end($dealerCards)->getValue() == 10){
-            echo "|       ".end($dealerCards)->getValue().end($dealerCards)->getForm()."|";
-
+            if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥'){
+                echo "|       " ."\e[01;31m".  end($dealerCards)->getValue() . end($dealerCards)->getForm() . "\e[0m". "|";
+            }else {
+                echo "|       " . end($dealerCards)->getValue() . end($dealerCards)->getForm() . "|";
+            }
         }else{
-            echo "|       ".end($dealerCards)->getValue().end($dealerCards)->getForm()." |";
-
+            if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                echo "|       " ."\e[01;31m". end($dealerCards)->getValue() . end($dealerCards)->getForm() . "\e[0m". " |";
+            }else{
+                echo "|       " . end($dealerCards)->getValue() . end($dealerCards)->getForm() . " |";
+            }
         }
 
         echo "\n";
@@ -123,14 +138,19 @@ class Table
         echo "\n";
 
         for ($i = 0; $i < count($playerCards);$i++){
-            if($playerCards[$i]->getValue() == 10){
-                echo "|".$playerCards[$i]->getValue().$playerCards[$i]->getForm();
-
-            }else{
-                echo "|".$playerCards[$i]->getValue().$playerCards[$i]->getForm()." ";
-
+            if($playerCards[$i]->getValue() == 10) {
+                if ($playerCards[$i]->getForm() == '♦' || $playerCards[$i]->getForm() == '♥') {
+                    echo "|" . "\e[01;31m" . $playerCards[$i]->getValue() . $playerCards[$i]->getForm() . "\e[0m";
+                } else {
+                    echo "|" . $playerCards[$i]->getValue() . $playerCards[$i]->getForm();
+                };
+            }else {
+                if ($playerCards[$i]->getForm() == '♦' || $playerCards[$i]->getForm() == '♥') {
+                    echo "|" . "\e[01;31m". $playerCards[$i]->getValue() . $playerCards[$i]->getForm(). "\e[0m" . " ";
+                } else {
+                    echo "|" . $playerCards[$i]->getValue() . $playerCards[$i]->getForm() . " ";
+                }
             }
-
         }
         echo "       |";
         echo "\n";
@@ -143,7 +163,11 @@ class Table
         for ($i = 0; $i < count($playerCards)-1;$i++){
             echo "|   ";
         }
-        echo "|    ".end($playerCards)->getForm()."     |";
+        if ($playerCards[$i]->getForm() == '♦' || $playerCards[$i]->getForm() == '♥'){
+            echo "|    " . "\e[01;31m". end($playerCards)->getForm() . "\e[0m". "     |";
+        }else {
+            echo "|    " . end($playerCards)->getForm() . "     |";
+        }
         echo "\n";
         for ($i = 0; $i < count($playerCards)-1;$i++){
             echo "|   ";
@@ -155,11 +179,17 @@ class Table
             echo "|   ";
         }
         if(end($playerCards)->getValue() == 10){
-            echo "|       ".end($playerCards)->getValue().end($playerCards)->getForm()."|";
-
+            if ($playerCards[$i]->getForm() == '♦' || $playerCards[$i]->getForm() == '♥'){
+                echo "|       " ."\e[01;31m".  end($playerCards)->getValue() . end($playerCards)->getForm() . "\e[0m". "|";
+            }else {
+                echo "|       " . end($playerCards)->getValue() . end($playerCards)->getForm() . "|";
+            }
         }else{
-            echo "|       ".end($playerCards)->getValue().end($playerCards)->getForm()." |";
-
+            if ($playerCards[$i]->getForm() == '♦' || $playerCards[$i]->getForm() == '♥') {
+                echo "|       " ."\e[01;31m". end($playerCards)->getValue() . end($playerCards)->getForm() . "\e[0m". " |";
+            }else{
+                echo "|       " . end($playerCards)->getValue() . end($playerCards)->getForm() . " |";
+            }
         }
 
         echo "\n";
@@ -177,7 +207,7 @@ class Table
         $faceDownPatternHalf = "░░░░";
         $faceDownPattern = "░░░░░░░░";
         $spaceInsideCard = " ".$faceDownPattern.$faceDownPattern." ";
-        $spaceInsideCardHalf = " ".$faceDownPatternHalf."BlackJack".$faceDownPatternHalfMinusOne." ";
+        $spaceInsideCardHalf = " ".$faceDownPatternHalf."Black"."\e[01;31mJack\e[0m".$faceDownPatternHalfMinusOne." ";
         $space= "                 ";
         echo $space."┌──────────────────┐\n".$space."|".$spaceInsideCard."|\n".$space."|".$spaceInsideCardHalf."|\n"
             .$space."|".$spaceInsideCard."|\n".$space."└──────────────────┘";
