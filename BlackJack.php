@@ -15,7 +15,9 @@ class BlackJack
         $game->showWelcomePage();
         $game->prepareGame();
         $game->playGame();
-    }
+      }
+
+
 }
 
 $blackJack = new BlackJack();

@@ -15,6 +15,12 @@ class CardDeck
         }
     }
 
+    public function dealCard($index){
+        $randomCard = $this->deck[$index];
+        unset($this->deck[$index]);
+        return $randomCard;
+    }
+
 
     /**
      * @return array

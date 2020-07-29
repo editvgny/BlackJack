@@ -3,10 +3,10 @@
 
 class Table
 {
-    public function printTable($name, $playerCash, $dealerCards,$playerCards){
+    public function printTable($name, $playerCash, $dealerCards,$playerCards,$dealer){
         $this->printHeader($name, $playerCash);
-        $this->printDealerCards($dealerCards);
-        $this->printDealersPoint($dealerCards);
+        $this->printDealerCards($dealerCards,$dealer);
+        $this->printDealersPoint($dealerCards, $dealer);
         $this->printDeck();
         $this->printPlayerCards($playerCards);
         $this->printPlayersPoint($playerCards);
@@ -19,10 +19,15 @@ class Table
         echo "\n";
 
     }
-    public function printDealersPoint($dealerCards){
+    public function printDealersPoint($dealerCards,$dealer){
         $point = 0;
-        foreach ($dealerCards as $card){
-            $point += $card->getPoint();
+        if($dealer->isHide()){
+            $point = $dealerCards[1]->getPoint();
+        }else {
+
+            foreach ($dealerCards as $card) {
+                $point += $card->getPoint();
+            }
         }
         echo "\n";
 
@@ -46,44 +51,68 @@ class Table
     }
 
 
-    public function printDealerCards($dealerCards){
-
-
+    public function printDealerCards($dealerCards,$dealer){
         echo "Dealer`s cards: ";
         echo "\n";
         echo "\n";
 
+        if($dealer->isHide()){
+            $firstCard = "░";
+        }else{
+            $firstCard = " ";
+        }
         for ($i = 0; $i < count($dealerCards)-1;$i++){
             echo "┌───";
         }
         echo "┌──────────┐";
 
         echo "\n";
-
-        for ($i = 0; $i < count($dealerCards);$i++){
-            if($dealerCards[$i]->getValue() == 10) {
-                if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
-                    echo "|" . "\e[01;31m" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . "\e[0m";
+        if($dealer->isHide()){
+            echo "|".$firstCard.$firstCard.$firstCard;
+            for ($i = 1; $i < count($dealerCards); $i++) {
+                if ($dealerCards[$i]->getValue() == 10) {
+                    if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                        echo "|" . "\e[01;31m" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . "\e[0m";
+                    } else {
+                        echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm();
+                    };
                 } else {
-                    echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm();
-                };
-            }else {
-                if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
-                    echo "|" . "\e[01;31m". $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm(). "\e[0m" . " ";
+                    if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                        echo "|" . "\e[01;31m" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . "\e[0m" . " ";
+                    } else {
+                        echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . " ";
+                    }
+                }
+            }
+        }else {
+            for ($i = 0; $i < count($dealerCards); $i++) {
+                if ($dealerCards[$i]->getValue() == 10) {
+                    if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                        echo "|" . "\e[01;31m" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . "\e[0m";
+                    } else {
+                        echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm();
+                    };
                 } else {
-                    echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . " ";
+                    if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥') {
+                        echo "|" . "\e[01;31m" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . "\e[0m" . " ";
+                    } else {
+                        echo "|" . $dealerCards[$i]->getValue() . $dealerCards[$i]->getForm() . " ";
+                    }
                 }
             }
         }
         echo "       |";
         echo "\n";
-        for ($i = 0; $i < count($dealerCards)-1;$i++){
+        echo "|".$firstCard.$firstCard.$firstCard;
+        for ($i = 1; $i < count($dealerCards)-1;$i++){
             echo "|   ";
         }
         echo "|          |";
 
         echo "\n";
-        for ($i = 0; $i < count($dealerCards)-1;$i++){
+        echo "|".$firstCard.$firstCard.$firstCard;
+
+        for ($i = 1; $i < count($dealerCards)-1;$i++){
             echo "|   ";
         }
         if ($dealerCards[$i]->getForm() == '♦' || $dealerCards[$i]->getForm() == '♥'){
@@ -92,13 +121,17 @@ class Table
             echo "|    " . end($dealerCards)->getForm() . "     |";
         }
         echo "\n";
-        for ($i = 0; $i < count($dealerCards)-1;$i++){
+        echo "|".$firstCard.$firstCard.$firstCard;
+
+        for ($i = 1; $i < count($dealerCards)-1;$i++){
             echo "|   ";
         }
         echo "|          |";
 
         echo "\n";
-        for ($i = 0; $i < count($dealerCards)-1;$i++){
+        echo "|".$firstCard.$firstCard.$firstCard;
+
+        for ($i = 1; $i < count($dealerCards)-1;$i++){
             echo "|   ";
         }
         if(end($dealerCards)->getValue() == 10){

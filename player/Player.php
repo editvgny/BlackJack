@@ -44,4 +44,27 @@ class Player
         array_push($this->cards,$card);
     }
 
+    /**
+     * @param int $cash
+     */
+    public function setCash(int $cash)
+    {
+        $this->cash = $this->cash+$cash;
+    }
+
+    public function deleteCard(){
+        $this->cards = array();
+    }
+
+
+    public function playerPoint(){
+        $point = 0;
+        echo count($this->cards);
+        foreach ($this->cards as $card){
+            $point += $card->getPoint();
+        }
+        return $point;
+    }
+
+
 }

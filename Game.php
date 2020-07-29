@@ -25,18 +25,17 @@ class Game{
     }
 
     public function prepareGame(){
-        CardFactory::createCardDeck($this);
+        CardFactory::createCardDeck($this->cardDeck);
 
+        //TODO kartyak keverese
+//        for ($i=0;$i<15;$i++){
+//            $this->dealer->addCard($this->cardDeck->getDeck()[$i]);
+//        }
+//
+//        for ($i=0;$i<15;$i++){
+//            $this->player->addCard($this->cardDeck->getDeck()[$i]);
+//        }
 
-        for ($i=0;$i<15;$i++){
-            $this->dealer->addCard($this->cardDeck->getDeck()[$i]);
-        }
-
-        for ($i=0;$i<15;$i++){
-            $this->player->addCard($this->cardDeck->getDeck()[$i]);
-        }
-
-        $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards());
 
 
 
@@ -46,14 +45,128 @@ class Game{
 
     public function playGame()
     {
-//        $this->cardDeck->getCards();
+        $turn = true;
+        while($turn){
+            $this->dealer->setHide(true);
+
+            //TODO Tetadas
+            echo "What is your bet: ";
+            $bet = readline();
+            $this->handleCash($bet);
+
+
+            //TODO elso 2-2 lap kiosztasa
+            $this->dealCard("player");
+            $this->dealCard("dealer");
+            $this->dealCard("player");
+            $this->dealCard("dealer");
+            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards(),$this->dealer);
+
+
+
+            //TODO input ker/megall  - kell a validacio
+            echo "What do you want to do (STAND - S, HIT - H) ?  ";
+            $action = readline();
+            while($action == "H"){
+                $this->dealCard("player");
+                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards(),$this->dealer);
+                if($this->endOfTurn()){
+                    $action = "end";
+                }else{
+                    echo "What do you want to do (STAND - S, HIT - H) ?  ";
+                    $action = readline();
+                }
+
+
+            }
+            if($action != "end") {
+                $this->dealer->setHide(false);
+                while ($this->dealer->isCardNeeded()) {
+                    echo $this->dealer->dealerPoint();
+                    $this->dealCard("dealer");
+                    $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer);
+                }
+            }
+
+            echo $this->winChecker();
+            switch ($this->winChecker()){
+                case "player":
+                    $this->playerWin();
+                    break;
+                case "dealer":
+
+                    break;
+                case "draw":
+                    $this->draw();
+                    break;
+
+            }
+            //TODO dealer es player kartyak torlese
+            $this->dealer->deleteCard();
+            $this->player->deleteCard();
+            //TODO pakli ujratoltese ha x alatt van a kartyak szama
+
+        }
+    }
+    public function dealCard($who){
+        $randomCard = $this->cardDeck->dealCard(array_rand($this->cardDeck->getDeck()));
+        switch ($who){
+            case "player":
+                $this->player->addCard($randomCard);
+                break;
+            case "dealer":
+                $this->dealer->addCard($randomCard);
+                break;
+        }
+    }
+
+    public function handleCash($bet){
+        $this->player->setCash($bet*(-1));
+    }
+
+
+
+    public function winChecker(){
+        if($this->player->playerPoint() > 21 || 21 - $this->player->playerPoint() > 21 - $this->dealer->dealerPoint() && $this->dealer->dealerPoint() < 22 ){
+            return "dealer";
+        }elseif($this->player->playerPoint() == $this->dealer->dealerPoint()){
+            return "draw";
+        }elseif(21 - $this->player->playerPoint() < 21 - $this->dealer->dealerPoint() || $this->dealer->dealerPoint() > 21){
+            return "player";
+        }else{
+            return "dont Know";
+        }
+
+
+    }
+
+    public function playerWin(){
+
+    }
+
+    public function draw(){
 
     }
 
 
-    public function addCardToDeck($card){
-        $this->cardDeck->addCardToDeck($card);
+
+    public function endOfTurn(){
+        if($this->player->playerPoint() > 21){
+            return true;
+        }
+        return false;
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
