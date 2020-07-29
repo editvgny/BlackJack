@@ -11,7 +11,10 @@ class CardFactory
 
         foreach ($symbols as $symbol) {
             foreach ($values as $value) {
-                $cardDeck->addCardToDeck(new Card($symbol,$value));
+                for($i=0;$i <2;$i++){
+                    $cardDeck->addCardToDeck(new Card($symbol,$value));
+                }
+
             }
         }
 

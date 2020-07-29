@@ -8,6 +8,7 @@ class Card
     private $point;
     private $design=array();
 
+
     public function __construct($form, $value)
     {
         $this->form = $form;
