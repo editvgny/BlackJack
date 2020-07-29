@@ -1,7 +1,8 @@
 <?php
 require "Logo.php";
 
-class Game{
+class Game
+{
 
     private $cardDeck;
     private $player;
@@ -9,11 +10,13 @@ class Game{
     private $table;
 
 
-    public function showWelcomePage(){
+    public function showWelcomePage()
+    {
         Logo::printLogo();
         echo "Enter you name: ";
         $playerName = readline("Enter your name: ");
         $this->player->setName($playerName);
+        $this->table->printHeader($playerName, $this->player->getCash());
     }
 
 
@@ -25,13 +28,14 @@ class Game{
 
     public function __construct()
     {
-        $this->cardDeck =  new CardDeck();
+        $this->cardDeck = new CardDeck();
         $this->player = new Player();
         $this->dealer = new Dealer();
         $this->table = new Table();
     }
 
-    public function prepareGame(){
+    public function prepareGame()
+    {
         CardFactory::createCardDeck($this->cardDeck);
 
         //TODO kartyak keverese
@@ -42,51 +46,40 @@ class Game{
 //        for ($i=0;$i<15;$i++){
 //            $this->player->addCard($this->cardDeck->getDeck()[$i]);
 //        }
-
-
-
-
-
     }
-
 
     public function playGame()
     {
         $turn = true;
-        while($turn){
+        while ($turn) {
             $this->dealer->setHide(true);
 
             //TODO Tetadas
-            echo "What is your bet: ";
+            echo "\nWhat is your bet: ";
             $bet = readline();
             $this->handleCash($bet);
-
 
             //TODO elso 2-2 lap kiosztasa
             $this->dealCard("player");
             $this->dealCard("dealer");
             $this->dealCard("player");
             $this->dealCard("dealer");
-            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards(),$this->dealer);
-
-
+            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer);
 
             //TODO input ker/megall  - kell a validacio
-            echo "What do you want to do (STAND - S, HIT - H) ?  ";
+            echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
             $action = readline();
-            while($action == "H"){
+            while ($action == "H") {
                 $this->dealCard("player");
-                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(),$this->player->getCards(),$this->dealer);
-                if($this->endOfTurn()){
+                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer);
+                if ($this->endOfTurn()) {
                     $action = "end";
-                }else{
-                    echo "What do you want to do (STAND - S, HIT - H) ?  ";
+                } else {
+                    echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
                     $action = readline();
                 }
-
-
             }
-            if($action != "end") {
+            if ($action != "end") {
                 $this->dealer->setHide(false);
                 while ($this->dealer->isCardNeeded()) {
                     echo $this->dealer->dealerPoint();
@@ -95,18 +88,16 @@ class Game{
                 }
             }
 
-            echo $this->winChecker();
-            switch ($this->winChecker()){
+            switch ($this->winChecker()) {
                 case "player":
-                    $this->playerWin();
+                    $this->playerWin($bet);
                     break;
                 case "dealer":
-
+                    echo "\nDealer won!";
                     break;
                 case "draw":
-                    $this->draw();
+                    $this->draw($bet);
                     break;
-
             }
             //TODO dealer es player kartyak torlese
             $this->dealer->deleteCard();
@@ -115,9 +106,11 @@ class Game{
 
         }
     }
-    public function dealCard($who){
+
+    public function dealCard($who)
+    {
         $randomCard = $this->cardDeck->dealCard(array_rand($this->cardDeck->getDeck()));
-        switch ($who){
+        switch ($who) {
             case "player":
                 $this->player->addCard($randomCard);
                 break;
@@ -127,53 +120,44 @@ class Game{
         }
     }
 
-    public function handleCash($bet){
-        $this->player->setCash($bet*(-1));
+    public function handleCash($bet)
+    {
+        $this->player->setCash($bet * (-1));
     }
 
-
-
-    public function winChecker(){
-        if($this->player->playerPoint() > 21 || 21 - $this->player->playerPoint() > 21 - $this->dealer->dealerPoint() && $this->dealer->dealerPoint() < 22 ){
+    public function winChecker()
+    {
+        if ($this->player->playerPoint() > 21 || 21 - $this->player->playerPoint() > 21 - $this->dealer->dealerPoint() && $this->dealer->dealerPoint() < 22) {
             return "dealer";
-        }elseif($this->player->playerPoint() == $this->dealer->dealerPoint()){
+        } elseif ($this->player->playerPoint() == $this->dealer->dealerPoint()) {
             return "draw";
-        }elseif(21 - $this->player->playerPoint() < 21 - $this->dealer->dealerPoint() || $this->dealer->dealerPoint() > 21){
+        } elseif (21 - $this->player->playerPoint() < 21 - $this->dealer->dealerPoint() || $this->dealer->dealerPoint() > 21) {
             return "player";
-        }else{
+        } else {
             return "dont Know";
         }
-
-
     }
 
-    public function playerWin(){
-
+    public function playerWin($bet)
+    {
+        $this->player->setCash($bet * 2);
+        echo "\nYou won!";
     }
 
-    public function draw(){
-
+    public function draw($bet)
+    {
+        $this->player->setCash($bet);
+        echo "\nIt's a draw!";
     }
 
 
-
-    public function endOfTurn(){
-        if($this->player->playerPoint() > 21){
+    public function endOfTurn()
+    {
+        if ($this->player->playerPoint() > 21) {
             return true;
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

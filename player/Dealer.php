@@ -24,7 +24,6 @@ class Dealer
     public function dealerPoint()
     {
         $point = 0;
-        echo count($this->cards);
         foreach ($this->cards as $card) {
             $point += $card->getPoint();
         }

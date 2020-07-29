@@ -59,7 +59,6 @@ class Player
 
     public function playerPoint(){
         $point = 0;
-        echo count($this->cards);
         foreach ($this->cards as $card){
             $point += $card->getPoint();
         }

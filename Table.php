@@ -14,7 +14,7 @@ class Table
     }
 
     public function printHeader($name, $playerCash){
-        echo "                                                       Hello ".$name."      Your cash: ".$playerCash."\n";
+        echo "\n                                                     Player: ".$name."      Your cash: ".$playerCash."\n";
         echo "\n";
         echo "\n";
 
