@@ -13,8 +13,10 @@ class Card
     {
         $this->form = $form;
         $this->value = $value;
-        if($value == "J" || $value == "Q" || $value == "K" || $value == "A"){
+        if($value == "J" || $value == "Q" || $value == "K" ){
             $this->point = 10;
+        } elseIf($value == "A"){
+            $this->point = 11;
         }else{
             $this->point = $value;
         }

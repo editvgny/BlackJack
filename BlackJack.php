@@ -6,6 +6,7 @@ require "card/CardFactory.php";
 require "player/Player.php";
 require "player/Dealer.php";
 require "Table.php";
+require "PointCounter.php";
 
 class BlackJack
 {

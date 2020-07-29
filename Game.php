@@ -9,23 +9,6 @@ class Game
     private $dealer;
     private $table;
 
-
-    public function showWelcomePage()
-    {
-        Logo::printLogo();
-        echo "Enter you name: ";
-        $playerName = readline("Enter your name: ");
-        $this->player->setName($playerName);
-        $this->table->printHeader($playerName, $this->player->getCash());
-    }
-
-
-
-
-
-
-
-
     public function __construct()
     {
         $this->cardDeck = new CardDeck();
@@ -34,18 +17,19 @@ class Game
         $this->table = new Table();
     }
 
+    public function showWelcomePage()
+    {
+        Logo::printLogo();
+        echo "Enter you name: ";
+        $playerName = readline("Enter your name: ");
+        $this->player->setName($playerName);
+//        $this->table->printHeader($playerName, $this->player->getCash());
+    }
+
     public function prepareGame()
     {
         CardFactory::createCardDeck($this->cardDeck);
-
         //TODO kartyak keverese
-//        for ($i=0;$i<15;$i++){
-//            $this->dealer->addCard($this->cardDeck->getDeck()[$i]);
-//        }
-//
-//        for ($i=0;$i<15;$i++){
-//            $this->player->addCard($this->cardDeck->getDeck()[$i]);
-//        }
     }
 
     public function playGame()
@@ -64,14 +48,14 @@ class Game
             $this->dealCard("dealer");
             $this->dealCard("player");
             $this->dealCard("dealer");
-            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer);
+            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
 
             //TODO input ker/megall  - kell a validacio
             echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
             $action = readline();
             while ($action == "H") {
                 $this->dealCard("player");
-                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer);
+                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
                 if ($this->endOfTurn()) {
                     $action = "end";
                 } else {
@@ -84,7 +68,7 @@ class Game
                 while ($this->dealer->isCardNeeded()) {
                     echo $this->dealer->dealerPoint();
                     $this->dealCard("dealer");
-                    $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer);
+                    $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
                 }
             }
 

@@ -3,13 +3,13 @@
 
 class Table
 {
-    public function printTable($name, $playerCash, $dealerCards,$playerCards,$dealer){
+    public function printTable($name, $playerCash, $dealerCards,$playerCards,$dealer, $player){
         $this->printHeader($name, $playerCash);
         $this->printDealerCards($dealerCards,$dealer);
         $this->printDealersPoint($dealerCards, $dealer);
         $this->printDeck();
         $this->printPlayerCards($playerCards);
-        $this->printPlayersPoint($playerCards);
+        $this->printPlayersPoint($player);
 
     }
 
@@ -37,14 +37,11 @@ class Table
 
     }
 
-    public function printPlayersPoint($playerCards){
-        $point = 0;
-        foreach ($playerCards as $card){
-            $point += $card->getPoint();
-        }
+    public function printPlayersPoint($player){
+
         echo "\n";
 
-        echo "Player's creadit: ".$point;
+        echo "Player's creadit: ".$player->playerPoint();
         echo "\n";
         echo "\n";
 

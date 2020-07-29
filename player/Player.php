@@ -58,11 +58,8 @@ class Player
 
 
     public function playerPoint(){
-        $point = 0;
-        foreach ($this->cards as $card){
-            $point += $card->getPoint();
-        }
-        return $point;
+
+        return PointCounter::bestPointCounter($this->cards);
     }
 
 
