@@ -54,6 +54,7 @@ class Game
             echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
             $action = readline();
             while ($action == "H") {
+                sleep(1);
                 $this->dealCard("player");
                 $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
                 if ($this->endOfTurn()) {
@@ -63,9 +64,12 @@ class Game
                     $action = readline();
                 }
             }
+
             if ($action != "end") {
                 $this->dealer->setHide(false);
+                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
                 while ($this->dealer->isCardNeeded()) {
+                    sleep(1);
                     echo $this->dealer->dealerPoint();
                     $this->dealCard("dealer");
                     $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
@@ -142,6 +146,8 @@ class Game
         }
         return false;
     }
+
+
 
 
 }

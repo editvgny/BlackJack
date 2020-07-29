@@ -23,11 +23,8 @@ class Dealer
 
     public function dealerPoint()
     {
-        $point = 0;
-        foreach ($this->cards as $card) {
-            $point += $card->getPoint();
-        }
-        return $point;
+
+        return PointCounter::bestPointCounter($this->cards);
     }
 
 
