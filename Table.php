@@ -3,9 +3,13 @@
 
 class Table
 {
-    public function printTable($name, $playerCash, $dealerCards, $playerCards, $dealer, $player, $deck)
+    public function printTable($dealer, $player, $deck)
     {
-        $this->printHeader($name, $playerCash, $deck);
+        $playerName = $player->getName();
+        $playerCards = $player->getCards();
+        $playerCredit = $player->getCash();
+        $dealerCards = $dealer->getCards();
+        $this->printHeader($playerName, $playerCredit, $deck);
         $this->printDealerCards($dealerCards, $dealer);
         $this->printDealersPoint($dealerCards, $dealer);
         $this->printDeck();
@@ -16,10 +20,25 @@ class Table
 
     public function printHeader($name, $playerCash, $deck)
     {
-        echo "\n                                                     Player: " . $name . "      Credit: " . $playerCash ."                                               Cards left in deck: ".$deck->getNumberOfCardsInDeck()."\n";
-        echo "\n";
-        echo "\n";
+        echo "\n                                                     Player: ";
+        echo $name . "      Credit: " . $playerCash;
+        echo "                                               Cards left in deck: ";
+        echo $deck->getNumberOfCardsInDeck()."\n";
+        $this->newLine(2);
 
+
+    }
+
+
+
+
+
+
+    public function newLine($num){
+        for($i = 0; $i < $num; $i++){
+            echo "\n";
+        }
+        echo "\n";
     }
 
     public function printDealersPoint($dealerCards, $dealer)

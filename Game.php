@@ -52,7 +52,7 @@ class Game
             $this->dealCard("dealer");
             $this->dealCard("player");
             $this->dealCard("dealer");
-            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
+            $this->table->printTable($this->dealer, $this->player,$this->cardDeck);
 
             //TODO input ker/megall  - kell a validacio
             echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
@@ -64,7 +64,7 @@ class Game
             while ($action == "H") {
                 sleep(1);
                 $this->dealCard("player");
-                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
+                $this->table->printTable( $this->dealer, $this->player,$this->cardDeck);
                 if ($this->endOfTurn()) {
                     $action = "end";
                 } else {
@@ -79,12 +79,12 @@ class Game
 
             if ($action != "end") {
                 $this->dealer->setHide(false);
-                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
+                $this->table->printTable( $this->dealer, $this->player,$this->cardDeck);
                 while ($this->dealer->isCardNeeded()) {
                     sleep(1);
                     echo $this->dealer->dealerPoint();
                     $this->dealCard("dealer");
-                    $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
+                    $this->table->printTable( $this->dealer, $this->player,$this->cardDeck);
                 }
             }
 
