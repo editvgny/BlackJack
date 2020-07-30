@@ -39,8 +39,12 @@ class Game
             $this->dealer->setHide(true);
 
             //TODO Tetadas
-            echo "\nWhat is your bet: ";
+            echo "\nYou have ".$this->player->getCash()." credit. What is your bet: ";
             $bet = readline();
+            while($bet > $this->player->getCash()){
+                echo "\nYou dont have enough credit! You have ".$this->player->getCash() ." credit. What is your bet: ";
+                $bet = readline();
+            }
             $this->handleCash($bet);
 
             //TODO elso 2-2 lap kiosztasa
@@ -48,31 +52,39 @@ class Game
             $this->dealCard("dealer");
             $this->dealCard("player");
             $this->dealCard("dealer");
-            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
+            $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
 
             //TODO input ker/megall  - kell a validacio
             echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
             $action = readline();
+            while($action != "H" && $action != "S"){
+                echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
+                $action = readline();
+            }
             while ($action == "H") {
                 sleep(1);
                 $this->dealCard("player");
-                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
+                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
                 if ($this->endOfTurn()) {
                     $action = "end";
                 } else {
                     echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
                     $action = readline();
+                    while($action != "H" && $action != "S"){
+                        echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
+                        $action = readline();
+                    }
                 }
             }
 
             if ($action != "end") {
                 $this->dealer->setHide(false);
-                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
+                $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
                 while ($this->dealer->isCardNeeded()) {
                     sleep(1);
                     echo $this->dealer->dealerPoint();
                     $this->dealCard("dealer");
-                    $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player);
+                    $this->table->printTable($this->player->getName(), $this->player->getCash(), $this->dealer->getCards(), $this->player->getCards(), $this->dealer, $this->player,$this->cardDeck);
                 }
             }
 

@@ -3,9 +3,9 @@
 
 class Table
 {
-    public function printTable($name, $playerCash, $dealerCards, $playerCards, $dealer, $player)
+    public function printTable($name, $playerCash, $dealerCards, $playerCards, $dealer, $player, $deck)
     {
-        $this->printHeader($name, $playerCash);
+        $this->printHeader($name, $playerCash, $deck);
         $this->printDealerCards($dealerCards, $dealer);
         $this->printDealersPoint($dealerCards, $dealer);
         $this->printDeck();
@@ -14,9 +14,9 @@ class Table
 
     }
 
-    public function printHeader($name, $playerCash)
+    public function printHeader($name, $playerCash, $deck)
     {
-        echo "\n                                                     Player: " . $name . "      Your cash: " . $playerCash . "\n";
+        echo "\n                                                     Player: " . $name . "      Credit: " . $playerCash ."                                               Cards left in deck: ".$deck->getNumberOfCardsInDeck()."\n";
         echo "\n";
         echo "\n";
 
@@ -34,7 +34,7 @@ class Table
         }
         echo "\n";
 
-        echo "Dealers creadit: " . $point;
+        echo "Dealer's cards value: " . $point;
         echo "\n";
         echo "\n";
 
@@ -45,7 +45,7 @@ class Table
 
         echo "\n";
 
-        echo "Player's creadit: " . $player->playerPoint();
+        echo "Player's cards value: " . $player->playerPoint();
         echo "\n";
         echo "\n";
 

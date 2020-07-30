@@ -29,4 +29,9 @@ class CardDeck
     {
         return $this->deck;
     }
+
+
+    public function getNumberOfCardsInDeck(){
+        return count($this->deck);
+    }
 }
