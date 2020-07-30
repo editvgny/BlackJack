@@ -137,10 +137,6 @@ class Table
         echo "└──────────┘";
     }
 
-
-
-
-
     public function printPlayerCards($playerCards)
     {
 
@@ -206,29 +202,6 @@ class Table
 
         echo "└──────────┘";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function printDeck()

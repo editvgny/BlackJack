@@ -165,7 +165,7 @@ class Game
             $this->dealer->setHide(false);
             $this->table->printTable($this->dealer, $this->player, $this->cardDeck);
             while ($this->dealer->isCardNeeded()) {
-                sleep(1);
+                sleep(1.5);
                 $this->dealCard("dealer");
                 $this->table->printTable($this->dealer, $this->player, $this->cardDeck);
             }

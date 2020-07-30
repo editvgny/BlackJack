@@ -16,17 +16,12 @@ class PointCounter
             }elseif(self::getNumberOFAce($deck) > 1){
                 $point -= (self::getNumberOFAce($deck)-1)*10;
                 if($point < 22){
-                    echo 1;
                     return $point;}
-                echo 2;
                 return $point - 10;
-
             }
         }
         return $point;
-
     }
-
 
     public static function getNumberOFAce($deck)
     {
@@ -39,15 +34,7 @@ class PointCounter
         return $counter;
     }
 
-    public static function hasAce($deck)
-    {
-        foreach ($deck as $card) {
-            if ($card->getValue() == "A") {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 
 }
