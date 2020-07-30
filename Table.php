@@ -25,13 +25,7 @@ class Table
         echo "                                               Cards left in deck: ";
         echo $deck->getNumberOfCardsInDeck()."\n";
         $this->newLine(2);
-
-
     }
-
-
-
-
 
 
     public function newLine($num){
