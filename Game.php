@@ -23,13 +23,13 @@ class Game
         echo "Enter you name: ";
         $playerName = readline("Enter your name: ");
         $this->player->setName($playerName);
-//        $this->table->printHeader($playerName, $this->player->getCash());
+
     }
 
     public function prepareGame()
     {
         CardFactory::createCardDeck($this->cardDeck);
-        //TODO kartyak keverese
+
     }
 
     public function playGame()
@@ -37,69 +37,16 @@ class Game
         $turn = true;
         while ($turn) {
             $this->dealer->setHide(true);
-
-            //TODO Tetadas
-            echo "\nYou have ".$this->player->getCash()." credit. What is your bet: ";
-            $bet = readline();
-            while($bet > $this->player->getCash()){
-                echo "\nYou dont have enough credit! You have ".$this->player->getCash() ." credit. What is your bet: ";
-                $bet = readline();
-            }
+            $bet = $this->askForBet();
             $this->handleCash($bet);
-
-            //TODO elso 2-2 lap kiosztasa
-            $this->dealCard("player");
-            $this->dealCard("dealer");
-            $this->dealCard("player");
-            $this->dealCard("dealer");
-            $this->table->printTable($this->dealer, $this->player,$this->cardDeck);
-
-            //TODO input ker/megall  - kell a validacio
-            echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
-            $action = readline();
+            $this->dealFirstTurnCards();
+            $action = $this->askForAction();
             while($action != "H" && $action != "S"){
-                echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
-                $action = readline();
+                $action = $this->askForAction();
             }
-            while ($action == "H") {
-                sleep(1);
-                $this->dealCard("player");
-                $this->table->printTable( $this->dealer, $this->player,$this->cardDeck);
-                if ($this->endOfTurn()) {
-                    $action = "end";
-                } else {
-                    echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
-                    $action = readline();
-                    while($action != "H" && $action != "S"){
-                        echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
-                        $action = readline();
-                    }
-                }
-            }
-
-            if ($action != "end") {
-                $this->dealer->setHide(false);
-                $this->table->printTable( $this->dealer, $this->player,$this->cardDeck);
-                while ($this->dealer->isCardNeeded()) {
-                    sleep(1);
-                    echo $this->dealer->dealerPoint();
-                    $this->dealCard("dealer");
-                    $this->table->printTable( $this->dealer, $this->player,$this->cardDeck);
-                }
-            }
-
-            switch ($this->winChecker()) {
-                case "player":
-                    $this->playerWin($bet);
-                    break;
-                case "dealer":
-                    echo "\nDealer won!";
-                    break;
-                case "draw":
-                    $this->draw($bet);
-                    break;
-            }
-            //TODO dealer es player kartyak torlese
+            $action = $this->handleHitAction($action);
+            $this->handleDealersTurn($action);
+            $this->displayWinResult($bet);
             $this->dealer->deleteCard();
             $this->player->deleteCard();
             //TODO pakli ujratoltese ha x alatt van a kartyak szama
@@ -160,6 +107,85 @@ class Game
     }
 
 
+    public function askForBet()
+    {
+        echo "\nYou have " . $this->player->getCash() . " credit. What is your bet: ";
+        $bet = readline();
+        while ($bet > $this->player->getCash() || is_numeric($bet) == false) {
+            if($bet > $this->player->getCash()){
+                echo "\nYou dont have enough credit! You have " . $this->player->getCash() . " credit. \n What is your bet: ";
+                $bet = readline();
+            }else{
+                echo "\nYou should type numeric characters! \n What is your bet: ";
+                $bet = readline();
+            }
+
+        }
+        return $bet;
+    }
+
+    public function dealFirstTurnCards()
+    {
+        for($i = 0; $i <2; $i++){
+            $this->dealCard("player");
+            $this->dealCard("dealer");
+        }
+        $this->table->printTable($this->dealer, $this->player, $this->cardDeck);
+    }
+
+    public function askForAction()
+    {
+        echo "\nWhat do you want to do (STAND - S, HIT - H) ?  ";
+        $action = readline();
+        return $action;
+    }
+
+
+    public function handleHitAction($action)
+    {
+        while ($action == "H") {
+            sleep(1);
+            $this->dealCard("player");
+            $this->table->printTable($this->dealer, $this->player, $this->cardDeck);
+            if ($this->endOfTurn()) {
+                $action = "end";
+            } else {
+                $action = $this->askForAction();
+                while ($action != "H" && $action != "S") {
+                    $action = $this->askForAction();
+                }
+            }
+        }
+        return $action;
+    }
+
+    public function handleDealersTurn($action)
+    {
+        if ($action != "end") {
+            $this->dealer->setHide(false);
+            $this->table->printTable($this->dealer, $this->player, $this->cardDeck);
+            while ($this->dealer->isCardNeeded()) {
+                sleep(1);
+                $this->dealCard("dealer");
+                $this->table->printTable($this->dealer, $this->player, $this->cardDeck);
+            }
+        }
+    }
+
+    public function displayWinResult($bet)
+    {
+        switch ($this->winChecker()) {
+            case "player":
+                $this->playerWin($bet);
+                break;
+            case "dealer":
+                echo "\nDealer won!";
+                break;
+            case "draw":
+                $this->draw($bet);
+                break;
+        }
+    }
 
 
 }

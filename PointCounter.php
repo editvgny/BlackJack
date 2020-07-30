@@ -10,13 +10,10 @@ class PointCounter
             $point += $card->getPoint();
         }
         if ($point > 21) {
-            echo "tobb";
             if(self::getNumberOFAce($deck) == 1){
-                echo "egy asz";
                 $point -= 10;
                 return $point;
             }elseif(self::getNumberOFAce($deck) > 1){
-                echo "tobb asz";
                 $point -= (self::getNumberOFAce($deck)-1)*10;
                 if($point < 22){
                     echo 1;
@@ -26,7 +23,6 @@ class PointCounter
 
             }
         }
-        echo "kevesebb";
         return $point;
 
     }
