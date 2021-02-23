@@ -5,22 +5,21 @@ require "card/CardDeck.php";
 require "card/CardFactory.php";
 require "player/Player.php";
 require "player/Dealer.php";
+require "Table.php";
+require "PointCounter.php";
 
 class BlackJack
 {
     public function start()
     {
-    $game = new Game();
-    $game->showWelcomePage();
-    $game->prepareGame();
-    $game->playGame();
+        $game = new Game();
+        $game->showWelcomePage();
+        $game->prepareGame();
+        $game->playGame();
+      }
 
 
-
-    }
 }
-
-
 
 $blackJack = new BlackJack();
 $blackJack->start();

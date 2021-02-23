@@ -14,4 +14,24 @@ class CardDeck
             $card->getCard();
         }
     }
+
+    public function dealCard($index){
+        $randomCard = $this->deck[$index];
+        unset($this->deck[$index]);
+        return $randomCard;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getDeck(): array
+    {
+        return $this->deck;
+    }
+
+
+    public function getNumberOfCardsInDeck(){
+        return count($this->deck);
+    }
 }
