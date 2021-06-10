@@ -1,10 +1,13 @@
 <?php
 
 
-class Table
-{
-    public function printTable($dealer, $player, $deck)
-    {
+class Board {
+    /**
+     * @param $dealer
+     * @param $player
+     * @param $deck
+     */
+    public function printTable($dealer, $player, $deck) {
         $playerName = $player->getName();
         $playerCards = $player->getCards();
         $playerCredit = $player->getCash();
@@ -17,8 +20,12 @@ class Table
         $this->printPlayersPoint($player);
     }
 
-    public function printHeader($name, $playerCash, $deck)
-    {
+    /**
+     * @param $name
+     * @param $playerCash
+     * @param $deck
+     */
+    public function printHeader($name, $playerCash, $deck) {
         echo "\n                                                     Player: ";
         echo $name . "      Credit: " . $playerCash;
         echo "                                               Cards left in deck: ";
@@ -26,10 +33,11 @@ class Table
         $this->newLine(2);
     }
 
-
-    public function printDealersPoint($dealerCards, $dealer)
-    {
-        $point = 0;
+    /**
+     * @param $dealerCards
+     * @param $dealer
+     */
+    public function printDealersPoint($dealerCards, $dealer) {
         if ($dealer->isHide() && count($dealerCards) > 0) {
             $point = $dealerCards[1]->getPoint();
         } else {
@@ -38,23 +46,24 @@ class Table
         $this->newLine(1);
         echo "Dealer's cards value: " . $point;
         $this->newLine(2);
-
     }
 
-    public function printPlayersPoint($player)
-    {
+    /**
+     * @param $player
+     */
+    public function printPlayersPoint($player) {
         $this->newLine(1);
         echo "Player's cards value: " . $player->playerPoint();
         $this->newLine(2);
     }
 
-
-    public function printDealerCards($dealerCards, $dealer)
-    {
+    /**
+     * @param $dealerCards
+     * @param $dealer
+     */
+    public function printDealerCards($dealerCards, $dealer) {
         echo "Dealer`s cards: ";
         $this->newLine(2);
-
-
         if ($dealer->isHide()) {
             $cardSymbol = "░";
         } else {
@@ -64,7 +73,6 @@ class Table
             echo "┌───";
         }
         echo "┌──────────┐";
-
         echo "\n";
         if ($dealer->isHide()) {
             echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
@@ -74,7 +82,6 @@ class Table
                 } else {
                     $this->printCardUpperSymbol($dealerCards[$i]);
                     echo " ";
-
                 }
             }
         } else {
@@ -84,159 +91,96 @@ class Table
 
                 } else {
                     $this->printCardUpperSymbol($dealerCards[$i]);
-                    echo" ";
-
-
+                    echo " ";
                 }
             }
         }
         echo "       |";
-        echo "\n";
-        echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
-        for ($i = 1; $i < count($dealerCards) - 1; $i++) {
-            echo "|   ";
-        }
-        echo "|          |";
-
-        echo "\n";
-        echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
-
-        for ($i = 1; $i < count($dealerCards) - 1; $i++) {
-            echo "|   ";
-        }
+        $i = $this->printDealerCardSides($cardSymbol, $dealerCards);
         $this->printCardMiddleSymbol($dealerCards[$i]);
-        echo "\n";
-        echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
-
-        for ($i = 1; $i < count($dealerCards) - 1; $i++) {
-            echo "|   ";
-        }
-        echo "|          |";
-
-        echo "\n";
-        echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
-
-        for ($i = 1; $i < count($dealerCards) - 1; $i++) {
-            echo "|   ";
-        }
+        $i = $this->printDealerCardSides($cardSymbol, $dealerCards);
         if (end($dealerCards)->getValue() == 10) {
-
             $this->printCardLowerSymbol(end($dealerCards));
             echo "|";
         } else {
             $this->printCardLowerSymbol(end($dealerCards));
             echo " |";
         }
-
         echo "\n";
-
         for ($i = 0; $i < count($dealerCards) - 1; $i++) {
             echo "└───";
         }
-
         echo "└──────────┘";
     }
 
-    public function printPlayerCards($playerCards)
-    {
-
-
+    /**
+     * @param $playerCards
+     */
+    public function printPlayerCards($playerCards) {
         echo "Player's cards: ";
         echo "\n";
         echo "\n";
-
         for ($i = 0; $i < count($playerCards) - 1; $i++) {
             echo "┌───";
         }
         echo "┌──────────┐";
-
         echo "\n";
-
         for ($i = 0; $i < count($playerCards); $i++) {
             if ($playerCards[$i]->getValue() == 10) {
                 $this->printCardUpperSymbol($playerCards[$i]);
             } else {
                 $this->printCardUpperSymbol($playerCards[$i]);
                 echo " ";
-
             }
-
-
         }
         echo "       |";
-        echo "\n";
-        for ($i = 0; $i < count($playerCards) - 1; $i++) {
-            echo "|   ";
-        }
-        echo "|          |";
-
-        echo "\n";
-        for ($i = 0; $i < count($playerCards) - 1; $i++) {
-            echo "|   ";
-        }
+        $i = $this->printPlayerCardSides($playerCards);
         $this->printCardMiddleSymbol($playerCards[$i]);
-
-        echo "\n";
-        for ($i = 0; $i < count($playerCards) - 1; $i++) {
-            echo "|   ";
-        }
-        echo "|          |";
-
-        echo "\n";
-        for ($i = 0; $i < count($playerCards) - 1; $i++) {
-            echo "|   ";
-        }
+        $i = $this->printPlayerCardSides($playerCards);
         if ($playerCards[$i]->getValue() == 10) {
             $this->printCardLowerSymbol($playerCards[$i]);
         } else {
             $this->printCardLowerSymbol($playerCards[$i]);
             echo " |";
-
         }
-
         echo "\n";
-
         for ($i = 0; $i < count($playerCards) - 1; $i++) {
             echo "└───";
         }
-
         echo "└──────────┘";
     }
 
-
-    public function printDeck()
-
-    {
+    public function printDeck() {
         $faceDownPatternHalfMinusOne = "░░░";
         $faceDownPatternHalf = "░░░░";
         $faceDownPattern = "░░░░░░░░";
         $spaceInsideCard = " " . $faceDownPattern . $faceDownPattern . " ";
         $spaceInsideCardHalf = " " . $faceDownPatternHalf . "Black" . "\e[01;31mJack\e[0m" . $faceDownPatternHalfMinusOne . " ";
         $space = "                 ";
-        echo $space . "┌──────────────────┐\n" . $space . "|" . $spaceInsideCard . "|\n" . $space . "|" . $spaceInsideCardHalf . "|\n"
-            . $space . "|" . $spaceInsideCard . "|\n" . $space . "└──────────────────┘";
+        echo $space . "┌──────────────────┐\n" . $space . "|" . $spaceInsideCard . "|\n" . $space . "|" . $spaceInsideCardHalf . "|\n" . $space . "|" . $spaceInsideCard . "|\n" . $space . "└──────────────────┘";
         echo "\n";
         echo "\n";
     }
-    public function printCardMiddleSymbol($card)
-    {
+
+    /**
+     * @param $card
+     */
+    public function printCardMiddleSymbol($card) {
         switch ($card->getForm()) {
             case '♥':
             case "♦":
-
                 echo "|    " . "\e[01;31m" . $card->getForm() . "\e[0m" . "     |";
                 break;
             default:
                 echo "|    " . $card->getForm() . "     |";
-
                 break;
         }
-
-
     }
 
-    public function printCardUpperSymbol($card)
-    {
+    /**
+     * @param $card
+     */
+    public function printCardUpperSymbol($card) {
         switch ($card->getForm()) {
             case '♥':
             case "♦":
@@ -244,13 +188,14 @@ class Table
                 break;
             default:
                 echo "|" . $card->getValue() . $card->getForm();
-
                 break;
         }
     }
 
-    public function printCardLowerSymbol($card)
-    {
+    /**
+     * @param $card
+     */
+    public function printCardLowerSymbol($card) {
         switch ($card->getForm()) {
             case '♥':
             case "♦":
@@ -262,11 +207,52 @@ class Table
         }
     }
 
-    public function newLine($num)
-    {
+    /**
+     * @param $num
+     */
+    public function newLine($num) {
         for ($i = 0; $i < $num; $i++) {
             echo "\n";
         }
         echo "\n";
+    }
+
+    /**
+     * @param string $cardSymbol
+     * @param $dealerCards
+     * @return int
+     */
+    public function printDealerCardSides(string $cardSymbol, $dealerCards): int {
+        echo "\n";
+        echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
+        for ($i = 1; $i < count($dealerCards) - 1; $i++) {
+            echo "|   ";
+        }
+        echo "|          |";
+
+        echo "\n";
+        echo "|" . $cardSymbol . $cardSymbol . $cardSymbol;
+
+        for ($i = 1; $i < count($dealerCards) - 1; $i++) {
+            echo "|   ";
+        }
+        return $i;
+    }
+
+    /**
+     * @param $playerCards
+     * @return int
+     */
+    public function printPlayerCardSides($playerCards): int {
+        echo "\n";
+        for ($i = 0; $i < count($playerCards) - 1; $i++) {
+            echo "|   ";
+        }
+        echo "|          |";
+        echo "\n";
+        for ($i = 0; $i < count($playerCards) - 1; $i++) {
+            echo "|   ";
+        }
+        return $i;
     }
 }
